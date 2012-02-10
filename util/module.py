@@ -11,7 +11,6 @@ import sys, os, types
 # Please list all the modules you imported here for automatically reload.
 from avalon.util import dependency, builtin
 _DEPENDENCY_ = [dependency, builtin]
-__ALL__ = ['get_caller', 'get_module_name', 'reload_if']
 
 #  the following fetched from 1.5.2's inspect.py
 def currentframe():
@@ -25,27 +24,38 @@ if hasattr(sys, '_getframe'): currentframe = lambda: sys._getframe(1)
 # done fetch
 
 # the following fetched from python 2.7 logging module
-# not support for frozen exe yet.
-if __file__[-4:].lower() in ['.pyc', '.pyo']:
-    _srcfile = __file__[:-4] + '.py'
-else:
-    _srcfile = __file__
-_srcfile = os.path.normcase(_srcfile)
+# and edited by airyai@gmail.com
 
-def get_caller():
-    '''Get the caller script file via stack frame.'''
+# not support for frozen exe yet.
+def get_source_file(filepath):
+    if filepath[-4:].lower() in ['.pyc', '.pyo']:
+        filepath = filepath[:-4] + '.py'
+    filepath = os.path.normcase(filepath)
+    return filepath
+
+_srcfile = get_source_file(__file__)
+
+def get_caller(exclude_files=None):
+    '''
+    Get the caller script file via stack frame.
+    
+    @param exclude_files: A list of absolute paths for get_caller to exclude.
+    '''
     try:
         f = currentframe()
     except ValueError:
         return ''
     #On some versions of IronPython, currentframe() returns None if
     #IronPython isn't run with -X:Frames.
+    exclude_files = set(exclude_files) if exclude_files is not None else set()
+    exclude_files.add(_srcfile)
     if f is not None:
         f = f.f_back
+    rv = None
     while hasattr(f, "f_code"):
         co = f.f_code
         filename = os.path.normcase(co.co_filename)
-        if filename == _srcfile:
+        if filename in exclude_files:
             f = f.f_back
             continue
         rv = (co.co_filename, f.f_lineno, co.co_name)

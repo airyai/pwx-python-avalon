@@ -22,12 +22,15 @@ class MapNode(object.Object):
     @ivar parents: Nodes that depend on this node.
     '''
     def __init__(self, data):
+        object.Object.__init__(self)
         self.data = data
         self.targets = []
         self.parents = []
         
-    def toString(self):
-        return 'data=%s, targets=%s, parents=%s' % (self.data, self.targets, self.parents)
+    def toRepr(self, extra=None):
+        return object.Object.toRepr(self, {'data': self.data,
+                                           'targets': self.targets,
+                                           'parents': self.parents})
 
 class DependencyMap(object.Object):
     '''
@@ -44,6 +47,7 @@ class DependencyMap(object.Object):
         '''
         if (not builtin.callable(get_dependency_proc)):
             raise ValueError('Param "get_dependency_proc" must be a function object.')
+        object.Object.__init__(self)
         self.nodes = {}
         self.fp = get_dependency_proc
         

@@ -18,25 +18,10 @@ _DEPENDENCY_ = []
 # import module
 if (sys.version_info.major == 2):
     from avalon.util.py2x import builtin_2x
+    from avalon.util.py2x.builtin_2x import *
     _DEPENDENCY_.append(builtin_2x)
 else:
     from avalon.util.py3x import builtin_3x
+    from avalon.util.py3x.builtin_3x import *
     _DEPENDENCY_.append(builtin_3x)
-
-####
-# expose builtin functions
-#
-__m = _DEPENDENCY_[0]
-
-# interpreter
-reload = __m.reload
-callable = __m.callable
-
-iterkeys = __m.iterkeys
-iteritems = __m.iteritems
-itervalues = __m.itervalues
-
-keys = __m.keys
-items = __m.items
-values = __m.values
 

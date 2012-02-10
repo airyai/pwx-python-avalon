@@ -14,11 +14,13 @@ __ALL__ = ['Object']
 
 # Expose a suitable object class.
 if sys.version_info.major == 2:
-    import avalon.util.py2x.object_2x
-    _DEPENDENCY_.append(avalon.util.py2x.object_2x)
+    from avalon.util.py2x import object_2x
+    from avalon.util.py2x.object_2x import Object
+    _DEPENDENCY_.append(object_2x)
 else:
-    import avalon.util.py3x.object_3x
-    _DEPENDENCY_.append(avalon.util.py3x.object_3x)
+    from avalon.util.py3x import object_3x
+    from avalon.util.py3x.object_3x import Object
+    _DEPENDENCY_.append(object_3x)
     
-Object = _DEPENDENCY_[0].Object
+#Object = _DEPENDENCY_[0].Object
 

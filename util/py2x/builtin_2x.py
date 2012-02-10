@@ -24,3 +24,6 @@ itervalues = lambda x: x.itervalues()
 items = lambda x: x.items()
 keys = lambda x: x.keys()
 values = lambda x: x.values()
+
+# StringIO
+from cStringIO import StringIO
