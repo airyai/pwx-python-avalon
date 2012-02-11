@@ -8,7 +8,8 @@ Test log device.
 from __future__ import unicode_literals, print_function, nested_scopes, division
 
 # Please list all the modules you imported here for automatically reload.
-from avalon.util import builtin, object, baselog
+from avalon.util import builtin, object
+from avalon.base import baselog
 _DEPENDENCY_ = [builtin, object, baselog]
 
 # do test

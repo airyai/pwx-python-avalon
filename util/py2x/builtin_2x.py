@@ -10,6 +10,9 @@ import __builtin__
 # Please list all the modules you imported here for automatically reload.
 _DEPENDENCY_ = []
 
+# expose shadowed builtin objects
+object = __builtin__.object
+
 # expose reload function
 reload = __builtin__.reload
 

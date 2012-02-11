@@ -10,6 +10,9 @@ import imp, builtins
 # Please list all the modules you imported here for automatically reload.
 _DEPENDENCY_ = []
 
+# expose shadowed builtin objects
+object = builtins.object
+
 # expose reload
 reload = imp.reload
 
